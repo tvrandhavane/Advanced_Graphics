@@ -37,8 +37,8 @@ class raytracer{
 
 	public:
 		int t_count;
-		void init();
-		raytracer();
+		void init(char *file_name);
+		raytracer(char *file_name);
 		void createppm();
 		int getFrameHeight();
 		void setFrameHeight(int height);

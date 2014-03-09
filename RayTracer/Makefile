@@ -32,6 +32,7 @@ setup:
 	@$(ECHO) "Creating required directories...."
 	@mkdir -p obj
 	@mkdir -p bin
+	@mkdir -p images
 	@$(ECHO) "Compiling...."
 
 $(BINDIR)/$(TARGET): $(OBJS)

@@ -5,7 +5,7 @@
 #define maxcols 800
 #define maxrows 600	
 
-raytracer::raytracer(){
+raytracer::raytracer(char* file_name){
  	funct = new functions();
 	eye_wcs = new Point(0,0,0);
 	frameCenter = new Point(0,0,0);
@@ -24,7 +24,7 @@ raytracer::raytracer(){
 	backgroundColor= new color (0,0,0);
 	
 	ReflectedOrRefracted = new rayIntersection();
-	init();
+	init(file_name);
 
 }
 
@@ -474,16 +474,16 @@ void raytracer::raytrace(int level ,ray & r ,color & pixelColor){
 
 }
 
-void raytracer::init(){
+void raytracer::init(char *file_name){
 
 	string spec_file , data;
 	vector<string> list;
 	Point eye;
 	vector<float> vup(3, 0);
 	vector<float> n(3, 0);
-	//cout << "Please enter spec file path" << endl;
-	//cin >> spec_file;
-	ifstream specs ("./scene/test.txt");
+	
+	cout << "Reading scene file: " << endl;
+	ifstream specs (file_name);
 	if (specs.is_open()){
 		while(getline(specs,data)){
 			list=funct->split(data,' ');	
