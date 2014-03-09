@@ -14,6 +14,8 @@ class matrix
     	matrix(int m, int n);
     	float at(int i, int j);
     	void multScalar(int c);
+    	vector<float> multVector(vector<float> v);
+    	void multMatrix(matrix &qmat);
 
 };
 
