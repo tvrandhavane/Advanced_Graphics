@@ -24,6 +24,7 @@ class matrix
         void postMultMatrix(matrix * mat);
         void print();
         void makeIdentity();
+        matrix * transform();
 };
 
 #endif // MATRIX_H

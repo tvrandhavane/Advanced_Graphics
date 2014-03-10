@@ -103,3 +103,15 @@ void matrix::makeIdentity(){
 		values[i][i] = 1;
 	}
 }
+
+matrix * matrix::transform(){
+	matrix * transformed =  new matrix(this->n, this->m);
+
+	for(int i = 0; i < m; i++){
+		for(int j = 0; j < n; j++){
+			transformed->set(j, i, values[i][j]);
+		}
+	}
+
+	return transformed;
+}

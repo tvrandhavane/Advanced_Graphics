@@ -467,12 +467,13 @@ void raytracer::raytrace(int level ,ray & r ,color & pixelColor){
 			//cout << "Not intersected " << endl;
 			pixelColor.R = backgroundColor->R;
 			pixelColor.G = backgroundColor->G;
-			pixelColor.B = backgroundColor->B;		
+			pixelColor.B = backgroundColor->B;
 			//cout << "Not intersected " << endl;
 		}
 	}
 
 }
+
 matrix* generateTranslationMatrix(float l, float m, float n){
 	matrix* mat = new matrix(4,4);
 	mat->set(0,0,1);
@@ -484,6 +485,46 @@ matrix* generateTranslationMatrix(float l, float m, float n){
 	mat->set(2,3,n);
 	return mat;
 }
+
+matrix* generateScaleMatrix(float l, float m, float n){
+	matrix* mat = new matrix(4,4);
+	mat->makeIdentity();
+
+	mat->set(0,0,l);
+	mat->set(1,1,m);
+	mat->set(2,2,n);
+	return mat;
+}
+
+matrix* generateRotateMatrix(float l, int dir){
+	matrix* mat = new matrix(4,4);
+	mat->makeIdentity();
+
+	switch(dir){
+		case 0:
+			mat->set(1, 1, cos(l));
+			mat->set(1, 2, -1 * sin(l));
+			mat->set(2, 1, sin(l));
+			mat->set(2, 2, cos(l));
+			break;
+		case 1:
+			mat->set(0, 0, cos(l));
+			mat->set(0, 2, sin(l));
+			mat->set(2, 0, -1 * sin(l));
+			mat->set(2, 2, cos(l));
+			break;
+		case 2:
+			mat->set(0, 0, cos(l));
+			mat->set(0, 1, -1 * sin(l));
+			mat->set(1, 0, sin(l));
+			mat->set(1, 1, cos(l));
+			break;
+		default:
+			break;
+	}
+	return mat;
+}
+
 
 void raytracer::init(char *file_name){
 
@@ -583,6 +624,34 @@ void raytracer::init(char *file_name){
 							s->postMultMatrix(m);
 							matrix * m1 = generateTranslationMatrix(-1*atof(list[1].c_str()), -1*atof(list[2].c_str()), -1*atof(list[3].c_str()));
 							s->preMultMatrix(m1);
+						}
+						else if(list[0].compare("Scale")==0){
+							matrix * m = generateScaleMatrix(atof(list[1].c_str()), atof(list[2].c_str()), atof(list[3].c_str()));
+							s->postMultMatrix(m);
+							matrix * m1 = generateScaleMatrix(1/atof(list[1].c_str()), 1/atof(list[2].c_str()), 1/atof(list[3].c_str()));
+							s->preMultMatrix(m1);
+						}
+						else if(list[0].compare("Rotatex")==0){
+							matrix * m = generateRotateMatrix(atof(list[1].c_str()), 0);
+							s->postMultMatrix(m);
+							matrix * m1 = generateRotateMatrix(-1*atof(list[1].c_str()), 0);
+							s->preMultMatrix(m1);
+						}
+						else if(list[0].compare("Rotatey")==0){
+							matrix * m = generateRotateMatrix(atof(list[1].c_str()), 1);
+							s->postMultMatrix(m);
+							matrix * m1 = generateRotateMatrix(-1*atof(list[1].c_str()), 1);
+							s->preMultMatrix(m1);
+						}
+						else if(list[0].compare("Rotatez")==0){
+							matrix * m = generateRotateMatrix(atof(list[1].c_str()), 2);
+							s->postMultMatrix(m);
+							matrix * m1 = generateRotateMatrix(-1*atof(list[1].c_str()), 2);
+							s->preMultMatrix(m1);
+						}
+						else {
+							cout << "Error in scene file, Line : " << line_num << ": Unrecognized line." << endl;
+							exit(1);
 						}
 					}
 				}
