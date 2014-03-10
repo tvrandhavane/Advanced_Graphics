@@ -16,7 +16,8 @@ class Sphere {
 		Point* getCenter();
         int getType();
         material_property property;
-        void multMatrix(matrix *mat);
+        void preMultMatrix(matrix *mat);
+        void postMultMatrix(matrix *mat);
     protected:
     private:
         Point* center;
@@ -24,7 +25,8 @@ class Sphere {
         float radius;
 		functions *funct;
         int type;
-        matrix* m;
+        matrix* mPre;
+        matrix* mPost;
 
 };
 

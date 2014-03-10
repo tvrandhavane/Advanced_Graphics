@@ -580,7 +580,9 @@ void raytracer::init(char *file_name){
 					else{
 						if(list[0].compare("Translate")==0){
 							matrix * m = generateTranslationMatrix(atof(list[1].c_str()), atof(list[2].c_str()), atof(list[3].c_str()));
-							s->multMatrix(m);
+							s->postMultMatrix(m);
+							matrix * m1 = generateTranslationMatrix(-1*atof(list[1].c_str()), -1*atof(list[2].c_str()), -1*atof(list[3].c_str()));
+							s->preMultMatrix(m1);
 						}
 					}
 				}

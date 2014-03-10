@@ -19,10 +19,11 @@ class matrix
     	matrix(int m, int n);
     	float at(int i, int j);
     	void multScalar(int c);
-    	vector<float> multVector(vector<float> v);
-        void multMatrix(matrix * mat);
+    	vector<float> postMultVector(vector<float> v);
+        void preMultMatrix(matrix * mat);
+        void postMultMatrix(matrix * mat);
         void print();
-
+        void makeIdentity();
 };
 
 #endif // MATRIX_H

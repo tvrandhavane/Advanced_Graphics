@@ -2,7 +2,10 @@
 
 Sphere::Sphere(){
 	funct= new functions();
-	m = new matrix(4, 4);
+	mPre = new matrix(4, 4);
+	mPost = new matrix(4, 4);
+	mPre->makeIdentity();
+	mPost->makeIdentity();
 }
 
 Sphere::Sphere(Point *Center ,float rad, color* s_col, int type, material_property &p){
@@ -15,7 +18,10 @@ Sphere::Sphere(Point *Center ,float rad, color* s_col, int type, material_proper
 	property.ks = p.ks;
 	property.kt = p.kt;
 	property.n = p.n;
-	m = new matrix(4, 4);
+	mPre = new matrix(4, 4);
+	mPost = new matrix(4, 4);
+	mPre->makeIdentity();
+	mPost->makeIdentity();
 }
 
 float Sphere::getRadius(){
@@ -25,6 +31,7 @@ float Sphere::getRadius(){
 color* Sphere::getColor(){
 	return s_color;
 }
+
 Point* Sphere::getCenter(){
 	return center;
 }
@@ -70,6 +77,10 @@ void Sphere::getNormalAt(Point &P, ray & r, int dir){
 	}
 }
 
-void Sphere::multMatrix(matrix *mat){
-	m->multMatrix(mat);
+void Sphere::preMultMatrix(matrix *mat){
+	mPre->preMultMatrix(mat);
+}
+
+void Sphere::postMultMatrix(matrix *mat){
+	mPost->postMultMatrix(mat);
 }

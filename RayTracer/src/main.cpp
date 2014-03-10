@@ -37,11 +37,29 @@ int main(int argc, char*argv[])
 	cout << endl;
 	mat->print();
 	cout << endl;
-	m->multMatrix(mat);
+	m->postMultMatrix(mat);
 	m->print();
-	mat->multMatrix(mat);
+	/*mat->postMultMatrix(mat);
 	cout << endl;
-	mat->print();
+	mat->print();*/
+	cout << endl;
+
+	vector<float> v(4, 0);
+	v[0] = -3;
+	v[1] = -5;
+	v[2] = -6;
+	v[3] = 1;
+
+	for(int i = 0; i < v.size(); i++){
+		cout << v[i] << " ";
+	}
+	cout << endl;
+	cout << endl;
+	vector<float> v1 = m->postMultVector(v);
+	for(int i = 0; i < v1.size(); i++){
+		cout << v1[i] << " ";
+	}
+	cout << endl;
 
 	return 0;
 }
