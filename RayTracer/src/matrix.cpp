@@ -1,8 +1,8 @@
 #include "matrix.h"
 
 matrix::matrix(int m, int n){
-	this.m = m;
-	this.n = n;
+	this->m = m;
+	this->n = n;
 	values.resize(m, vector<float> (n, 0));
 }
 
@@ -26,8 +26,4 @@ vector<float> matrix::multVector(vector<float> v){
 		}
 	}
 	return toReturn;
-}
-
-void matrix::multMatrix(matrix &mat){
-	for(int i = 0; i < )
 }

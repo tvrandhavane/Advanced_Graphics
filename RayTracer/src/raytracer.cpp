@@ -483,6 +483,7 @@ void raytracer::init(char *file_name){
 	vector<float> n(3, 0);
 	
 	cout << "Reading scene file: " << endl;
+	cout << file_name << endl;
 	ifstream specs (file_name);
 	if (specs.is_open()){
 		while(getline(specs,data)){

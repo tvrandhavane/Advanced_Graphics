@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char*argv[])
 {
 	raytracer *s ;
-	s= new raytracer(argv[0]);
+	s= new raytracer(argv[1]);
 	s->rayTraceCall(3);
 	//s->rayTraceCallAntiAliasing(1);
 	s->createppm();
