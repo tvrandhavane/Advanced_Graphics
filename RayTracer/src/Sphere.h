@@ -2,6 +2,7 @@
 #define SPHERE_H
 #include "ray.h"
 #include "color.h"
+#include "matrix.h"
 
 
 class Sphere {
@@ -15,6 +16,7 @@ class Sphere {
 		Point* getCenter();
         int getType();
         material_property property;
+        void multMatrix(matrix *mat);
     protected:
     private:
         Point* center;
@@ -22,6 +24,7 @@ class Sphere {
         float radius;
 		functions *funct;
         int type;
+        matrix* m;
 
 };
 

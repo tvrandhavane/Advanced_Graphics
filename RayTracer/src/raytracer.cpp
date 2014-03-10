@@ -473,6 +473,17 @@ void raytracer::raytrace(int level ,ray & r ,color & pixelColor){
 	}
 
 }
+matrix* generateTranslationMatrix(float l, float m, float n){
+	matrix* mat = new matrix(4,4);
+	mat->set(0,0,1);
+	mat->set(1,1,1);
+	mat->set(2,2,1);
+	mat->set(3,3,1);
+	mat->set(0,3,l);
+	mat->set(1,3,m);
+	mat->set(2,3,n);
+	return mat;
+}
 
 void raytracer::init(char *file_name){
 
@@ -481,39 +492,106 @@ void raytracer::init(char *file_name){
 	Point eye;
 	vector<float> vup(3, 0);
 	vector<float> n(3, 0);
-	
+	int line_num = 0;
 	cout << "Reading scene file: " << endl;
-	cout << file_name << endl;
 	ifstream specs (file_name);
 	if (specs.is_open()){
 		while(getline(specs,data)){
-			list=funct->split(data,' ');	
-			if(list[0].compare("S")==0){
-				Sphere *s ;
-				int rad=atoi(list[1].c_str());
+			line_num++;
+			list=funct->split(data,',');
+			if(list[0].compare("Sphere")==0){
+				Sphere *s;
+				int rad;
 				Point *center;
 				color *col;
 				int type;
-				center= new Point(atof(list[2].c_str()),atof(list[3].c_str()),atof(list[4].c_str()));
-				col = new color(atoi(list[5].c_str()),atoi(list[6].c_str()),atoi(list[7].c_str()));	
-				type = atoi(list[8].c_str());
-				material_property prop;
-				prop.kd = atof(list[9].c_str());
-				prop.ks = atof(list[10].c_str());
-				prop.kr = atof(list[11].c_str());
-				prop.kt = atof(list[12].c_str());
-				prop.n = atof(list[13].c_str());
-				//cout << "n = "<< prop.n << endl;
-				s = new Sphere(center, rad,  col, type, prop);
 
+				material_property prop;
+
+				if(getline(specs,data)){
+					line_num++;
+					list = funct->split(data,',');
+					if(list[0].compare("Radius")==0){
+						rad = atof(list[1].c_str());
+					}
+					else{
+						cout << "Error in scene file, Line : " << line_num << ": Radius not found." << endl;
+						exit(1);
+					}
+				}
+				if(getline(specs,data)){
+					line_num++;
+					list = funct->split(data,',');
+					if(list[0].compare("Center")==0){
+						center= new Point(atof(list[1].c_str()),atof(list[2].c_str()),atof(list[3].c_str()));
+					}
+					else{
+						cout << "Error in scene file, Line : " << line_num << ": Center not found." << endl;
+						exit(1);
+					}
+				}
+				if(getline(specs,data)){
+					line_num++;
+					list = funct->split(data,',');
+					if(list[0].compare("Color")==0){
+						col = new color(atoi(list[1].c_str()),atoi(list[2].c_str()),atoi(list[3].c_str()));
+					}
+					else{
+						cout << "Error in scene file, Line : " << line_num << ": Color not found." << endl;
+						exit(1);
+					}
+				}
+				if(getline(specs,data)){
+					line_num++;
+					list = funct->split(data,',');
+					if(list[0].compare("Type")==0){
+						type = atoi(list[1].c_str());
+					}
+					else{
+						cout << "Error in scene file, Line : " << line_num << ": Type not found." << endl;
+						exit(1);
+					}
+				}
+				if(getline(specs,data)){
+					line_num++;
+					list = funct->split(data,',');
+					if(list[0].compare("Property")==0){
+						prop.kd = atof(list[1].c_str());
+						prop.ks = atof(list[2].c_str());
+						prop.kr = atof(list[3].c_str());
+						prop.kt = atof(list[4].c_str());
+						prop.n = atof(list[5].c_str());
+					}
+					else{
+						cout << "Error in scene file, Line : " << line_num << ": Property not found." << endl;
+						exit(1);
+					}
+				}
+
+				s = new Sphere(center, rad,  col, type, prop);
 				Sphere_list.push_back(s);
+
+				while(getline(specs,data)){
+					line_num++;
+					list = funct->split(data,',');
+					if(list[0].compare("End")==0){
+						break;
+					}
+					else{
+						if(list[0].compare("Translate")==0){
+							matrix * m = generateTranslationMatrix(atof(list[1].c_str()), atof(list[2].c_str()), atof(list[3].c_str()));
+							s->multMatrix(m);
+						}
+					}
+				}
+
 			}
 			if(list[0].compare("L")==0){
 				light * l ;
 				Point *p;
 				color *c;
 				p = new Point(atof(list[1].c_str()),atof(list[2].c_str()),atof(list[3].c_str()));
-				c = new color(atoi(list[4].c_str()),atoi(list[5].c_str()),atoi(list[6].c_str()));	
+				c = new color(atoi(list[4].c_str()),atoi(list[5].c_str()),atoi(list[6].c_str()));
 				l = new light(p, c);
 				//cout << "light pos = " << p->x << " " << p->y << " " << p->z << endl;
 				light_list.push_back(l);
