@@ -12,7 +12,7 @@
 *.lai
 *.la
 *.a
-RayTracer/bin/*
+
 
 # OS generated files #
 ######################
@@ -30,5 +30,7 @@ zhelpers.hpp
 #########################
 doc/*
 priv/*
+RayTracer/bin/*
+RayTracer/images/*
 .*
 *.json
