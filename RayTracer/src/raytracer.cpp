@@ -554,6 +554,7 @@ void raytracer::init(char *file_name){
 					list = funct->split(data,',');
 					if(list[0].compare("Radius")==0){
 						rad = atof(list[1].c_str());
+						cout << "Radius = "<< rad << endl;
 					}
 					else{
 						cout << "Error in scene file, Line : " << line_num << ": Radius not found." << endl;
@@ -655,7 +656,9 @@ void raytracer::init(char *file_name){
 						}
 					}
 				}
-
+				s->printPreMatrix();
+				cout << endl;
+				s->printPostMatrix();
 			}
 			if(list[0].compare("L")==0){
 				light * l ;

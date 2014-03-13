@@ -155,3 +155,11 @@ void Sphere::preMultMatrix(matrix *mat){
 void Sphere::postMultMatrix(matrix *mat){
 	mPost->postMultMatrix(mat);
 }
+
+void Sphere::printPreMatrix(){
+	mPre->print();
+}
+
+void Sphere::printPostMatrix(){
+	mPost->print();
+}

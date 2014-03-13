@@ -13,13 +13,13 @@ using namespace std;
 
 int main(int argc, char*argv[])
 {
-	/*raytracer *s ;
+	raytracer *s ;
 	s= new raytracer(argv[1]);
 	s->rayTraceCall(3);
 	//s->rayTraceCallAntiAliasing(1);
 	s->createppm();
-	*/
-	matrix * m = new matrix(4, 4);
+
+	/*matrix * m = new matrix(4, 4);
 	matrix* mat = new matrix(4,4);
 	mat->set(0,0,1);
 	mat->set(1,1,1);
@@ -42,7 +42,7 @@ int main(int argc, char*argv[])
 	/*mat->postMultMatrix(mat);
 	cout << endl;
 	mat->print();*/
-	cout << endl;
+	/*cout << endl;
 
 	vector<float> v(4, 0);
 	v[0] = -3;
@@ -59,7 +59,7 @@ int main(int argc, char*argv[])
 	for(int i = 0; i < v1.size(); i++){
 		cout << v1[i] << " ";
 	}
-	cout << endl;
+	cout << endl;*/
 
 	return 0;
 }

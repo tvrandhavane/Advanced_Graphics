@@ -18,6 +18,8 @@ class Sphere {
         material_property property;
         void preMultMatrix(matrix *mat);
         void postMultMatrix(matrix *mat);
+        void printPreMatrix();
+        void printPostMatrix();
     protected:
     private:
         Point* center;
