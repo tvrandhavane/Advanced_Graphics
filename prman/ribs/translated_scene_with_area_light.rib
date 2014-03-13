@@ -1,0 +1,155 @@
+##RenderMan RIB
+FrameBegin 1
+Format 800 600 1
+Display "scene.tif" "tiff" "rgba"
+PixelSamples 3 3
+
+Projection "perspective" "fov" [36]
+Translate 0 0 9
+Scale 1 1 -1
+WorldBegin
+
+TransformBegin
+	Translate 0 2 0
+	Rotate 90 1 0 0
+	Scale 2 2 1 # nonsquare rect (1 by .4)
+	LightSource "plausibleArealight" "mylighthandle" "intensity" 100
+	                "color lightcolor" [1 1 1] "float maxSamples" 256
+	                "float sides" 1
+	AttributeBegin
+	# visualizer for arealight
+	Attribute "visibility" "int specular" [0] "int diffuse" [0]
+	                       "int transmission" [0]
+	Attribute "trace" "int maxdiffusedepth" [1] "int maxspeculardepth" [1]
+	Color 1 1 1
+	Surface "constant"
+	Patch "bilinear" "P" [-.5 -.5 0  -.5 .5 0  .5 -.5 0  .5 .5 0]
+	AttributeEnd
+TransformEnd
+
+TransformBegin
+  LightSource "cosinelight_rts" 1 "point from" [-2.5 0 -5] "float intensity" 7.5 "float falloff" 2
+  LightSource "cosinelight_rts" 1 "point from" [2.5 0 -5] "float intensity" 7.5 "float falloff" 2
+  LightSource "cosinelight_rts" 3 "point from" [0 0 1.8] "float intensity" 13.7 "float falloff" 2
+  LightSource "causticlight" 2
+TransformEnd
+
+
+Attribute "visibility" "int diffuse" [1]
+Attribute "visibility" "int specular" [1]
+Attribute "visibility" "int transmission" [1]
+#Attribute "trace" "int maxspeculardepth" [4]
+Attribute "photon" "estimator" 200
+Attribute "photon" "causticmap" "scene_caustic_map.cpm"
+
+
+
+
+	#base
+	AttributeBegin
+	Color [1 1 0]
+	TransformBegin
+		Scale 5 3 10
+		Surface "specularSurface" "float Kd" 1 "float Ks" 0.2 "float Kr" 0.2 "float Kt" 0.8 
+		Polygon "P" [-1 -1 -1   -1 -1 0   1 -1 0]
+	TransformEnd
+
+	TransformBegin
+		Scale 5 3 10 
+		Surface "specularSurface" "float Kd" 1 "float Ks" 0.2 "float Kr" 0.2 "float Kt" 0.8 
+		Polygon "P" [-1 -1 -1   1 -1 0   1 -1 -1]
+	TransformEnd
+	AttributeEnd
+	
+	#back
+	AttributeBegin
+	Color [1 1 0]
+	TransformBegin
+		Translate 0 0 0
+		Surface "plausibleMatte" "uniform float indirectDiffuseSamples" 512 "uniform float indirectDiffuseMaxVar" 0.005 "string surfaceMap" "ratGrid.tex"
+		Rotate 0 0 1 0
+		Scale 5 3 10 
+		Polygon "P" [-1 1 -1   -1 -1 -1   1 -1 -1   1 1 -1]
+	TransformEnd
+	AttributeEnd
+
+	#left
+	Color [1 1 0]
+	AttributeBegin
+	TransformBegin
+		Surface "specularSurface" "float Kd" 1 "float Ks" 0.2 "float Kr" 0.2 "float Kt" 0.8 
+		Scale 5 3 10 
+		Polygon "P" [-1 1 -1   -1 1 0   -1 -1 0]
+	TransformEnd
+
+	TransformBegin
+		Surface "specularSurface" "float Kd" 1 "float Ks" 0.2 "float Kr" 0.2 "float Kt" 0.8 
+		Scale 5 3 10 
+		Polygon "P" [-1 1 -1   -1 -1 0   -1 -1 -1]
+	TransformEnd
+	AttributeEnd
+
+	#right
+	AttributeBegin
+	Color [1 1 0]
+	TransformBegin
+		Translate 0 0 0
+		Color [1 1 0]
+		Surface "plausibleMatte" "uniform float indirectDiffuseSamples" 512 "uniform float indirectDiffuseMaxVar" 0.005 
+		Rotate 0 0 1 0
+		Scale 5 3 10 
+		Polygon "P" [1 1 -1   1 -1 0   1 1 0]
+	TransformEnd
+
+
+	TransformBegin
+		Translate 0 0 0
+		#Surface "plausibleMatte" "uniform float indirectDiffuseSamples" 512 "uniform float indirectDiffuseMaxVar" 0.005 
+		Rotate 0 0 1 0
+		Scale 5 3 10 
+		Polygon "P" [1 1 -1   1 -1 -1   1 -1 0]
+	TransformEnd
+	AttributeEnd
+
+	#top
+	AttributeBegin
+	Color [1 1 1]
+	TransformBegin
+		Translate 0 0 0
+		Surface "plausibleMatte" "uniform float indirectDiffuseSamples" 512 "uniform float indirectDiffuseMaxVar" 0.005 
+		Rotate 0 0 1 0
+		Scale 5 3 10 
+		Polygon "P" [1 1 -1   1 1 0   -1 1 0]
+	TransformEnd
+
+	TransformBegin
+		Translate 0 0 0
+		Surface "plausibleMatte" "uniform float indirectDiffuseSamples" 512 "uniform float indirectDiffuseMaxVar" 0.005 
+		Rotate 0 0 1 0
+		Scale 5 3 10 
+		Polygon "P" [1 1 -1   -1 1 0   -1 1 -1]
+	TransformEnd
+	AttributeEnd
+
+
+	AttributeBegin
+		Color [0 1 0]
+		Surface "specularSurface" "float Kd" 0.1 "float Ks" 0.2 "float Kr" 0.2 "float Kt" 0.6 
+		TransformBegin
+			Translate 0 -1.4 -4
+			Sphere 1.6 -1.6 1.6 360
+		TransformEnd
+	AttributeEnd
+
+	AttributeBegin
+		Color [1 1 1]
+		Surface "plausibleMatte" "uniform float indirectDiffuseSamples" 512 "string surfaceMap" "pixarball.tex"
+		TransformBegin
+			Translate -.5 -2.3 -1
+			Sphere .7 -.7 .7 360
+		TransformEnd
+	AttributeEnd
+
+
+WorldEnd
+FrameEnd
