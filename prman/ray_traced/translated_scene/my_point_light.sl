@@ -1,4 +1,4 @@
-light cosinelight_rts
+light my_point_light
 (
     float intensity = 1;
     color lightcolor = 1;
@@ -9,7 +9,7 @@ light cosinelight_rts
 {
     illuminate(from) {
         float dist = length(L);
-	Cl = intensity * lightcolor * pow(dist, -falloff);   /* fall-off */
-	Cl *= transmission(Ps, from);   /* ray traced shadow */
+	    Cl = intensity * lightcolor * pow(dist, -falloff);
+	    Cl *= transmission(Ps, from);
     }
 }
