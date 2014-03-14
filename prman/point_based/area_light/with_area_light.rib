@@ -1,0 +1,164 @@
+
+FrameBegin 1
+  Format 800 600 1
+  Display "with_area_light.tif" "tiff" "rgba"
+  PixelSamples 3 3
+  Projection "perspective" "fov" [36]
+  Translate 0 0 9
+  Scale 1 1 -1
+  WorldBegin
+
+  Attribute "trace" "bias" 0.0001
+
+  Attribute "visibility" "int diffuse" [1]
+  Attribute "visibility" "int specular" [1]
+  Attribute "visibility" "int transmission" [1]
+
+  TransformBegin
+    Translate 0 2 0
+    Rotate 90 1 0 0
+    Scale 2 2 1 # nonsquare rect (1 by .4)
+    AttributeBegin
+    Attribute "trace" "int maxdiffusedepth" [1] "int maxspeculardepth" [1]
+    Color 1 1 1
+    Surface "constant"
+    Patch "bilinear" "P" [-.5 -.5 0  -.5 .5 0  .5 -.5 0  .5 .5 0]
+    AttributeEnd
+  TransformEnd
+
+
+   #base
+  AttributeBegin
+  Color [1 1 0]
+  TransformBegin
+    Scale 5 3 10
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Polygon "P" [-1 -1 -1   -1 -1 0   1 -1 0]
+  TransformEnd
+
+  TransformBegin
+    Scale 5 3 10 
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Polygon "P" [-1 -1 -1   1 -1 0   1 -1 -1]
+  TransformEnd
+  AttributeEnd
+  
+  #back
+  AttributeBegin
+  Color [1 1 0]
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Rotate 0 0 1 0
+    Scale 5 3 10 
+    Polygon "P" [-1 1 -1   -1 -1 -1   1 -1 -1]
+  TransformEnd
+
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Scale 5 3 10 
+    Polygon "P" [-1 1 -1   1 -1 -1   1 1 -1]
+  TransformEnd
+  AttributeEnd
+
+  #left
+  Color [1 1 0]
+  AttributeBegin
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Scale 5 3 10 
+    Polygon "P" [-1 1 -1   -1 1 0   -1 -1 0]
+  TransformEnd
+
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Scale 5 3 10 
+    Polygon "P" [-1 1 -1   -1 -1 0   -1 -1 -1]
+  TransformEnd
+  AttributeEnd
+
+  #right
+  AttributeBegin
+  Color [1 1 0]
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Scale 5 3 10 
+    Polygon "P" [1 1 -1   1 -1 0   1 1 0]
+  TransformEnd
+
+
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Scale 5 3 10 
+    Polygon "P" [1 1 -1   1 -1 -1   1 -1 0]
+  TransformEnd
+  AttributeEnd
+
+  #top
+  AttributeBegin
+  Color [1 1 1]
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Scale 5 3 10 
+    Polygon "P" [1 1 -1   1 1 0   -1 1 0]
+  TransformEnd
+
+  TransformBegin
+    Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+    Scale 5 3 10
+    Polygon "P" [1 1 -1   -1 1 0   -1 1 -1]
+  TransformEnd
+  AttributeEnd
+
+    AttributeBegin
+    Color [0 1 0]
+    Surface "specularSurface" "float Kd" 0.1 "float Ks" 0.2 "float Kr" 0.2 "float Kt" 0.6
+    TransformBegin
+      Translate 0 -1.4 -4
+      Sphere 1.6 -1.6 1.6 360
+    TransformEnd
+  AttributeEnd
+
+  AttributeBegin
+  Color [1 0 0]
+  Surface "with_caustics_shader" "string filename" "baked_file_with_area_light.ptc"
+      "float clampbleeding" 1 "float sortbleeding" 1 "float maxsolidangle" 0.03
+      "float maxvariation" 0.02 "string sides" "both"  "float intensity" 2.0
+      "string causticmap" "caustic_map_with_area_light.cpm"
+  TransformBegin
+    Translate -.5 -2.3 -2
+    Sphere .7 -.7 .7 360
+  TransformEnd
+  AttributeEnd
+
+  WorldEnd
+FrameEnd

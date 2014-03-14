@@ -19,7 +19,7 @@ TransformBegin
   LightSource "my_point_light" 3 "point from" [0 0 1.8] "float intensity" 13.7 "float falloff" 2
 TransformEnd
 
-Attribute "photon" "causticmap" "caustic_map.cpm"
+Attribute "photon" "causticmap" "caustic_map_without_area_light.cpm"
 Attribute "visibility" "int diffuse" [1]
 Attribute "visibility" "int specular" [1]
 Attribute "visibility" "int transmission" [1]
