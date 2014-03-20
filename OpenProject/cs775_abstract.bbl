@@ -3,6 +3,11 @@
 \bibitem{2011-TOG-quadruped}
 S.~Coros, A.~Karpathy, B.~Jones, L.~Reveret, and M.~van~de Panne.
 \newblock Locomotion skills for simulated quadrupeds.
-\newblock {\em ACM Transactions on Graphics}, 30(4):Article TBD, 2011.
+\newblock {\em ACM Transactions on Graphics}, 30(4):59:1--59:12, July, 2011.
+
+\bibitem{Wildcat}
+B.~Dynamics.
+\newblock Introducing wildcat.
+\newblock Published: 2013-10-03.
 
 \end{thebibliography}

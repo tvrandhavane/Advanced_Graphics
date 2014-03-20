@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.2.23)  20 MAR 2014 21:28
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2014.2.23)  20 MAR 2014 22:56
 entering extended mode
  %&-line parsing enabled.
 **cs775_abstract.tex
@@ -73,9 +73,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 4--7
  []
 
 
-Underfull \hbox (badness 1460) in paragraph at lines 4--7
-\OT1/cmr/m/it/10.95 Trans-ac-tions on Graph-ics\OT1/cmr/m/n/10.95 , 30(4):Ar-ti
--cle
+Underfull \hbox (badness 5475) in paragraph at lines 4--7
+\OT1/cmr/m/it/10.95 Trans-ac-tions on Graph-ics\OT1/cmr/m/n/10.95 , 30(4):59:1-
+-
  []
 
 ) [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
@@ -83,20 +83,20 @@ Underfull \hbox (badness 1460) in paragraph at lines 4--7
 
 ] (./cs775_abstract.aux) ) 
 Here is how much of TeX's memory you used:
- 545 strings out of 495061
- 6468 string characters out of 1182621
- 54652 words of memory out of 3000000
- 3773 multiletter control sequences out of 15000+50000
+ 546 strings out of 495061
+ 6477 string characters out of 1182621
+ 55652 words of memory out of 3000000
+ 3774 multiletter control sequences out of 15000+50000
  8234 words of font info for 29 fonts, out of 3000000 for 9000
  28 hyphenation exceptions out of 8191
- 25i,7n,21p,191b,207s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 25i,7n,21p,373b,207s stack positions out of 5000i,500n,10000p,200000b,50000s
 </usr/share/texmf-texlive/fonts/type1/public/amsfonts
 /cm/cmbx10.pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmbx12.
 pfb></usr/share/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/sh
 are/texmf-texlive/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texmf-te
 xlive/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texmf-texlive/fonts/
 type1/public/amsfonts/cm/cmti10.pfb>
-Output written on cs775_abstract.pdf (1 page, 82945 bytes).
+Output written on cs775_abstract.pdf (1 page, 83747 bytes).
 PDF statistics:
  30 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
