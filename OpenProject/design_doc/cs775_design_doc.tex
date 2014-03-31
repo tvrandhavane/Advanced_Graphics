@@ -1,0 +1,113 @@
+\documentclass[a4paper,11pt,twocolumn]{article}
+
+\usepackage[dvips]{graphicx}
+\usepackage{url}
+
+\title{CS775 Design Document : Locomotion Skills for Simulated Quadrupeds}
+\author{Tanmay Randhavane (110050010), Alok Yadav (110050043)}
+
+\date{\today}
+\begin{document}
+\maketitle
+
+\section{Introduction}
+% You have to write here how are you going to implement the project, what outputs can we expect and describe other deliverables.
+
+In this paper~\cite{2011-TOG-quadruped}, the authors have tried to solve the problem of modelling various sets of motions and gaits of a quadruped. Various actions that the authors tried to simulate were simple walk, trot, pace, canter, gallop, jumps over obstacles, falls and recovery after falls, sitting, lying down, getting up.
+
+As part of this open project, we will try to simulate some of the actions implemented by the author. We will focus on six primary gaits which are simple walk, trot, pace, canter, transverse gallop and rotary gallop. After modelling this part, we will try to optimize these motions using the optimization techniques discussed in the section 4 of the parent paper ~\cite{2011-TOG-quadruped}.
+
+\section{Implementation Details}
+%Talk about the scope of the problem here.
+The implementation will involve implementing following parts:
+\begin{enumerate}
+	\item \textbf{The model quadruped}
+
+	We will model the quadruped according to the dimensions mentioned in the parent paper ~\cite{2011-TOG-quadruped}. It will have a shoulder height of 47cm, a hip height of 45cm and a total mass of 34 kg. The model will be constructed using 30 links: 4 links for each leg, 6 for the spine/back, 4 for the tail, and 4 for the neck-and-head.
+
+	\item \textbf{The gait controller}
+
+	The gait controller consists of components that can be adjusted to get the desired motion of the quadruped. Following controllers will be implemented in our simulation:
+
+	\begin{enumerate}
+		\item \textbf{Gait Graph}
+
+		Gait graph captures the timing and relative phasing of the stance and swing phases of each of the legs. Gait graph has an associated stride period, $\equation{T}$. Gait graph has two parameters, a gait phase and a swing phase. Some aspects of the motion are modelled as a function of the gait phase whereas other aspects are modelled as a function of swing phase.
+
+		Gait graph will be defined by the parameters, swing phase and gait phase. The aspects of motion that these parameters will affect will be determined using the experimental data. 
+
+		\item \textbf{Virtual Forces}
+
+		The motion in the qudruped is directed by torques applied on various links. There are two primary sources of the torques, the virtual forces and the joint control. The used virtual forces are explained in the following subsections wherever they are used. A virtual force, $\equation{F}$, is applied by using the jacobian transpose to compute the required internal torques according to $\equation{\tau = J^{T}F}$. We will implement this formula using matrix multiplication to get the value of torque.
+
+		\item \textbf{Joint Control}
+
+		The second source of torque is the joint control. Each joint in the modelled quadruped will have a proportial-derivative (PD) controller. The PD-controller when given a desired orientation and the current orientation of the joint, returns a desired value of the torque that should be applied at that joint. We will use an external library for the PD-controller.
+		The sum of torques from joint control and virtual forces will give the final torque that is to be supplied to the Forward Dynamics Simulation which will then simulate the equations of motion.
+
+		\item \textbf{Leg Frames}
+
+		Leg frame is the link which connects the leg of the qudruped to the rest of the body. Each leg frame is connected to two legs. The leg frames are the links of the spine.
+
+		\item \textbf{Stance Legs}
+
+		Stance legs are responsible for controlling the motion of the leg frames. There is a PD-controller at the leg frame joint, which computes the desired value of torque to be applied, $\equation{\tau_{LF}}$. This torque is a sum of the torques applied on the links connected to the leg frame, i.e., the stance leg(s), the swing leg(s) and the neighbouring joints in the spine. In order to achieve the desired $\equation{\tau_{LF}}$, the hip joint does not have any PD-controller. Thus, the torque at hip joint is computed as $\equation{\tau_{stance} = \tau_{LF} - \tau_{swing} + \tau_{spine}}$. Here, $\equation{\tau_{swing}}$ is the sum of the torques for all the swing legs attached to the given leg frame and $\equation{\tau_{spine}}$ is an analogous quantity for the spine.
+
+		The motion of the leg frames is guided using three virtual forces, $\equation{F_{h}}$, $\equation{F_{v}}$ and  $\equation{F_{D}}$. First, $\equation{F_{h}}$, is used to make the leg frame to follow a height trajectory, we use, $\equation{F_{h} = k_{p}e + k_{d}\dot{e}}$ where $\equation{e}$ is the difference between the desired height and the current height.
+		$\equation{F_{v}}$ is used to regulate the leg frame velocity according to $\equation{F_{h} = k_{v}(v_{d} - v)}$. Third, $\equation{F_{D}}$ implements a phase-dependent force that is customised for each stance leg. It is measured as a function of progress in the gait.
+
+
+		These virtual forces will control only the overall function of the stance legs. To determine the orientations of the internal joints of the leg, Inverse Kinematics will be used.
+
+		\item \textbf{Swing legs}
+		Swing legs have desired swing foot trajectories determined for each gait. The target location of the foot is determined using a velocity-based foot placement model: $\equation{P_{2} = P_{LF} + (v_{d} - v)s_{fp}}$. Here, $\equation{P_{LF}}$ is the default stepping location relative to the leg frame, $\equation{P_{2}}$  is the target location and $\equation{s_{fp}}$ is the scale factor. Given the target position, IK is used to determine desired angles for individual joints and PD-controllers in turn compute the required torque.
+
+		\item \textbf{Spine}
+
+		The spine contains $\equation{n}$ number of links. The difference between the front and the rear leg frame's orientation will be distributed evenly among the n-1 joints of the spine. The PD-controllers on these joints will then compute the required torques. There will be a function to compute the difference in orientations which will use quaternions.
+
+		\item \textbf{Neck and head}
+
+		The trajectories of head and neck will be a function of the gait phase and this function will be determined automatically during optimization to reduce head wobble.
+
+		\item \textbf{Gravity compensation}
+
+		This is used to remove the impact of gravity on the swing legs, neck, head and spine. This is achieved using the virtual force, $\equation{F = -mg}$ at the center of mass of the relevant links. The center of mass will be a position which will be determined during model building.
+
+
+	\end{enumerate}
+	\item \textbf{The overall control loop}
+
+	The overall control loop, in each time step, computes the torques using the virtual forces and joint control torques and provides them to the Forward Dynamics Simulator. We will use Open Dynamics Engine(ODE) to simulate the forward dynamics simulation. The algorithm provided in the appendix of the parent paper ~\cite{2011-TOG-quadruped} will be used to implement the overall control loop.
+
+	\item \textbf{Optimization}
+
+	The default initialization allows only a basic version of gaits. We will optimize these gaits using the motion capture data from ~\cite{Abourachid}. In the optimization, we will try to minimize the following objective function,
+
+	$\equation{f_{obj}(P) = w_{d}f_{d} + w_{v}f_{v} + w_{h}f_{h} + w_{r}f_{r} }$
+
+	where $\equation{f_{d}}$ measures the deviation of the motion from the data, $\equation{f_{v}}$ measures the deviation of the desired speed, $\equation{f_{h}}$ measures the head accelerations
+ 	and $\equation{f_{r}}$ measures whole body rotations. A greedy stochastic local algorithm will be used to minimize the objective function.
+
+ 	\item \textbf{Results}
+
+	The results will be examined across following dimensions:
+	\begin{enumerate}
+		\item Optimization
+
+		The simulation first will be run with controllers designed by hand and then it will be compared with optimized simulation. Both the videos will be shown side by side to show the difference created by optimization using the real data.
+
+		\item Robustness
+
+		The resulting gaits will be tested to robustness against pushes. We will test this by applying forces to both the leg frames from front, back, left and right. The recovery from all these eight  perturbations means that the gait is robust.
+
+		\item Comparison to Motion Captured Data
+
+		We will compare the gaits of the simulated quadruped with that of the motion capture data and try to see how the various parts (legs, head and neck, foot placement) match to that of the motion capture data.
+	\end{enumerate}
+\end{enumerate}
+
+\bibliographystyle{abbrv}
+\bibliography{references}
+
+\end{document}
