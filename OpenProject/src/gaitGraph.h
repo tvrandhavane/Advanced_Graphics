@@ -2,25 +2,26 @@
 #define GAITGRAPH_H
 
 #include <iostream>
+#include "state.h"
+
 using namespace std;
+
+extern state * state_parameters;
 
 /*
 front left  0
 front right 1
-rear left 0
-rear right 1
+rear left 2
+rear right 3
 */
 
 class gaitGraph
 {
     private:
-    	int stride_period;
-    	int gait_phase;
-    	int swing_start[4];
-    	int swint_end[4];
+
 
     public:
-        gaitGraph();
+        gaitGraph(int stride_period);
 
         int get_stride_period();
         float get_gait_phase();

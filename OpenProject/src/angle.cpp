@@ -24,10 +24,10 @@ int angle::set_value(int value){
 	}
 }
 
-void controller::set_upper_limit(int value){
+void angle::set_upper_limit(int value){
 	upper_limit = value;
 }
 
-void controller::set_lower_limit(int value){
+void angle::set_lower_limit(int value){
 	lower_limit = value;
 }
