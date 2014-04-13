@@ -32,5 +32,6 @@ doc/*
 priv/*
 RayTracer/bin/*
 RayTracer/images/*
+OpenProject/bin/*
 .*
 *.json
