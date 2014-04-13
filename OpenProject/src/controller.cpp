@@ -1,5 +1,5 @@
 #include "controller.h"
 
 controller::controller(){
-	m = 0;
+	gait_graph = new gaitGraph();
 }

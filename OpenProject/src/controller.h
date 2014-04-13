@@ -2,19 +2,19 @@
 #define CONTROLLER_H
 
 #include <iostream>
-#include <cstdlib>
-#include <vector>
+#include "gaitGraph.h"
+#include "footPlacement.h"
 
 using namespace std;
 
 class controller
 {
     private:
-    	int m;
 
     public:
+        gaitGraph * gait_graph;
+        footPlacement * foot_controller;
         controller();
-        void print(string s);
 };
 
 #endif // CONTROLLER_H
