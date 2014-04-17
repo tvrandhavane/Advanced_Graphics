@@ -23,9 +23,11 @@ class state
         MatrixFunc function;
 
 
+
         //General
         int number_joints;
-
+        float curr_velocity[3];
+        float target_velocity[3];
 
     	//Gait graph parameters
     	int stride_period;
@@ -34,6 +36,8 @@ class state
     	int swing_end[4];
 
 
+        //foot
+        float foot_location[3];
         //Back 
         bonelink pelvis ;
         bonelink spine1;
@@ -70,7 +74,8 @@ class state
 
         //tail
         bonelink tail1;
-        bonelink tail2;
+        bonelink tail2;     P1 = state_parameters->get_foot_location();
+        P2 = Plf + (curr_velocity - target_velocity)*sfp;
         bonelink tail3;
         bonelink tail4;
 
@@ -88,13 +93,16 @@ class state
     	int get_stride_period() ;
         int get_number_joints();
         int get_gait_phase() ;
+        float* get_foot_location();
+        float* get_curr_velocity();
+        float* get_target_velocity();
 
         //setters
         void set_gait_phase(int phase);
-
+        void set_foot_location(float pos[3]);
         Matrix & transferFrame(Matrix& M,  float length, float angleX, float angleY, float angleZ);
 
-        
+
         state();
 
 };

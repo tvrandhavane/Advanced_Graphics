@@ -18,21 +18,31 @@ void compute_tau_vf(vector<float> &tau);
 void add_vector(vector<float> &result, vector<float> &opd1, vector<float> &opd2);
 void print_vector(vector<float> &vec);
 void get_tau_stance(leg_frame lf, bool l_stance, bool r_stance, vector<float> &vec);
+void foot_placement_control(float swing_phase);
 void compute_fv(float &fv);
 
-/*
-void foot_placement_control(float swing_phase){
-	if(swing_phase == 0){
-		P1 = current location
-		P2 = Plf + (curr_velocity - target_velocity)*sfp;
-	}
 
-	position in ground plane = swing_phase*P1 + (1 - swing_phase)*P2
-	height = height_trajectory(swing_phase)
-	position = height + position in ground plane
-	return position
+void foot_placement_control(float swing_phase, float & new_Pos[3]){
+	float P1[3], P2[3];
+	float curr_V =  state_parameters->get_curr_velocity();
+	float target_V =  state_parameters->get_target_velocity();
+	P1 = state_parameters->get_foot_location();
+	if(swing_phase == 0){
+		P2[0] = Plf + (curr_V[0] - target_V[0])*sfp;
+		P2[1] = Plf + (curr_V[1] - target_V[1])*sfp;
+		P2[2] = Plf + (curr_V[2] - target_V[2])*sfp;
+		state_parameters->set_foot_location(P2);
+	}
+	else{
+		P2 = P1; 
+	}
+	for(int i =0 ;i < 3; i++){
+		new_Pos[i] = swing_phase*P1[i] + (1 - swing_phase)*P2[i];
+	}
+	new_Pos[1] = height_trajectory(swing_phase);
+
 }
-*/
+
 
 void compute_tau_pd(vector<float> &tau, float gait_phase){
 	//computation of target angle
