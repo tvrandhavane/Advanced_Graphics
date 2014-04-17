@@ -13,3 +13,6 @@ int state::get_number_joints(){
 int state::get_gait_phase(){
 	return gait_phase;
 }
+void state::set_gait_phase(int phase){
+	gait_phase = phase;
+}

@@ -84,7 +84,7 @@ class state
         int get_gait_phase() ;
 
         //setters
-        void set_gait_phase();
+        void set_gait_phase(int phase);
 
 
         state();
