@@ -1,6 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "bonelink.h"
 #include <iostream>
 
 using namespace std;
@@ -11,13 +12,6 @@ front right 1
 rear left 2
 rear right 3
 */
-struct bone {
-    float link_length ;
-    float angleX ;
-    float angleY ;
-    float angleZ ;
-
-};
 
 
 class state
@@ -25,6 +19,10 @@ class state
     private:
 
     public:
+
+        MatrixFunc function;
+
+
         //General
         int number_joints;
 
@@ -37,42 +35,50 @@ class state
 
 
         //Back 
-        bone pelvis ;
-        bone spine[4];
-        bone scapula ;
+        bonelink pelvis ;
+        bonelink spine1;
+        bonelink spine2;
+        bonelink spine3;
+        bonelink spine4;
+        bonelink scapula ;
 
 
         /*** Rear legs***/
         //Rear Right leg 
-        bone Rfemur;
-        bone Rtibia;
-        bone Rmetartasus;
-        bone R_rphalange;
+        bonelink Rfemur;
+        bonelink Rtibia;
+        bonelink Rmetartasus;
+        bonelink R_rphalange;
 
         //Rear Left leg ;
-        bone Lfemur;
-        bone Ltibia;
-        bone Lmetartasus;
-        bone L_lphalange;
+        bonelink Lfemur;
+        bonelink Ltibia;
+        bonelink Lmetartasus;
+        bonelink L_lphalange;
 
         //Front Right leg;
-        bone Rhemurus ;
-        bone Rulna;
-        bone Rmetacarpus;
-        bone R_fphalange;
+        bonelink Rhemurus ;
+        bonelink Rulna;
+        bonelink Rmetacarpus;
+        bonelink R_fphalange;
 
         //Front Left leg
-        bone Lhemurus ;
-        bone Lulna;
-        bone Lmetacarpus;
-        bone L_fphalange;
+        bonelink Lhemurus ;
+        bonelink Lulna;
+        bonelink Lmetacarpus;
+        bonelink L_fphalange;
 
         //tail
-        bone tail[4];
+        bonelink tail1;
+        bonelink tail2;
+        bonelink tail3;
+        bonelink tail4;
 
         //neck
-        bone neck[3];
-        bone head;
+        bonelink neck1;
+        bonelink neck2;
+        bonelink neck3;
+        bonelink head;
 
 
 
@@ -86,7 +92,9 @@ class state
         //setters
         void set_gait_phase(int phase);
 
+        Matrix & transferFrame(Matrix& M,  float length, float angleX, float angleY, float angleZ);
 
+        
         state();
 
 };
