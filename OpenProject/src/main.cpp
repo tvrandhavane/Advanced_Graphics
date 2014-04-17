@@ -9,8 +9,8 @@ state * state_parameters;
 int main(int argc, char*argv[])
 {
 	state_parameters = new state();
-	controller * myController = new controller();
-	cout << myController->gait_graph->get_stride_period() << endl;
+	//controller * myController = new controller();
+	cout << state_parameters->get_stride_period() << endl;
 
 	return 0;
 }
