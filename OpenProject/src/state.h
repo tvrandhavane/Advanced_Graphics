@@ -74,8 +74,7 @@ class state
 
         //tail
         bonelink tail1;
-        bonelink tail2;     P1 = state_parameters->get_foot_location();
-        P2 = Plf + (curr_velocity - target_velocity)*sfp;
+        bonelink tail2;    
         bonelink tail3;
         bonelink tail4;
 
@@ -99,8 +98,30 @@ class state
 
         //setters
         void set_gait_phase(int phase);
-        void set_foot_location(float pos[3]);
+        void set_foot_location(float pos[3]);      
+        void set_swing_start(int start_time, int leg);
+        void set_swing_end(int start_time, int leg);
+
+
+
+
+
+
+
+
+
+
+
+
+
         Matrix & transferFrame(Matrix& M,  float length, float angleX, float angleY, float angleZ);
+
+
+
+
+        bool is_in_swing(int leg);
+
+
 
 
         state();

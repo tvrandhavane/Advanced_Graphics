@@ -26,6 +26,25 @@ float* state::get_curr_velocity(){
 float* state::get_target_velocity(){
 	return target_velocity;
 }
+
+bool state::is_in_swing(int leg){
+	if(gait_phase < swing_end[leg] && gait_phase > swing_start[leg]){
+
+		return true ;
+	}
+	else 
+		return false ;
+}
+
+
+void state::set_swing_start(int start_time, int leg){
+	swing_start[leg] = start_time;
+}
+
+void state::set_swing_end(int start_time, int leg){
+	swing_end[leg] = start_time;
+}
+
 Matrix & state::transferFrame(Matrix & M ,float length, float angleX, float angleY, float angleZ){
         Matrix *A = new Matrix(4,4);
         Matrix rotaion = Matrix(4,4);
