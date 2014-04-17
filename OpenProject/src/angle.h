@@ -14,7 +14,7 @@ class angle
 
     public:
         angle(int upper_limit, int lower_limit);
-
+        angle();
         int get_value();
         int set_value(int value);
 

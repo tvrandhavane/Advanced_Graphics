@@ -4,7 +4,9 @@ angle::angle(int upper_limit, int lower_limit){
 	this->upper_limit = upper_limit;
 	this->lower_limit = lower_limit;
 }
-
+angle::angle(){
+	
+}
 int angle::get_value(){
 	return current_value;
 }
