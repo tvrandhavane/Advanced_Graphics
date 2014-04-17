@@ -763,4 +763,3 @@ Matrix Inv(const Matrix& a)
   }
   return res;
 }
-

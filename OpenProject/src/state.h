@@ -77,9 +77,16 @@ class state
 
 
     	//Foot placement parameters
+
+        //getters
     	int get_stride_period() ;
         int get_number_joints();
         int get_gait_phase() ;
+
+        //setters
+        void set_gait_phase();
+
+
         state();
 
 };
