@@ -1,0 +1,21 @@
+Display "simple_sphere_plastic" "framebuffer" "rgb"
+Projection "perspective" "fov" 40
+Format 640 480 1
+
+Translate 0 0 1
+Rotate 0 1 0 0
+Rotate 90 0 1 0
+Scale 1 1 1
+
+WorldBegin
+  TransformBegin
+    Translate 1 1 1
+    LightSource "shaders/pointlight" 0
+  TransformEnd
+  Surface "shaders/plastic_with_texture"
+  # Surface "shaders/plastic_with_texture" "texturemap" ["textures/default.tex"]
+  # Surface "shaders/plastic_with_texture" "texturemap" ["textures/grid.tex"]
+  TransformBegin
+    Sphere 0.15 -0.15 0.15 360
+  TransformEnd
+WorldEnd

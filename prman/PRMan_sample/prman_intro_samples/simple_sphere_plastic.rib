@@ -1,0 +1,19 @@
+Display "simple_sphere_plastic" "tiff" "rgb"
+Projection "perspective" "fov" 40
+Format 640 480 1
+
+Translate 0 0 1
+Rotate 0 1 0 0
+Rotate 90 0 1 0
+Scale 1 1 1
+
+WorldBegin
+  TransformBegin
+    Translate 1 1 1
+    LightSource "shaders/pointlight" 0
+  TransformEnd
+  Surface "shaders/plastic"
+  TransformBegin
+    Sphere 0.15 -0.15 0.15 360
+  TransformEnd
+WorldEnd

@@ -1,0 +1,54 @@
+Option "searchpath" "string shader" "../shaders/"
+Option "searchpath" "string texture" "../textures/"
+
+FrameBegin 1
+  Format 960 540 1
+  PixelSamples 4 4
+  ShadingInterpolation "smooth"
+  Display "colorbleeding" "framebuffer" "rgba"   # render image to 'it'
+  Projection "perspective" "fov" 22
+  Translate 0 -0.5 8
+  Rotate -40  1 0 0
+  Rotate -20  0 1 0
+
+  WorldBegin
+
+    LightSource "indirectlight" 1 "float samples" 16 "float maxvariation" 0
+    # LightSource "indirectlight" 1 "float samples" 16 "float maxvariation" 0 "string envmap" "street.env"
+
+    Attribute "visibility" "int diffuse" 1   # make objects visible to rays
+    Attribute "visibility" "int specular" 1   # make objects visible to rays
+    Attribute "trace" "bias" 0.005
+
+    # Ground plane
+    AttributeBegin
+      Surface "matte" "Kd" 0.9
+      Color [1 1 1]
+      Scale 3 3 3
+      Polygon "P" [ -1 0 1  1 0 1  1 0 -1  -1 0 -1 ]
+    AttributeEnd
+
+    # Sphere
+    AttributeBegin
+      Surface "constant"
+      Color 1 0 0
+      Translate -0.7 0.5 0
+      Sphere 0.5  -0.5 0.5  360
+    AttributeEnd
+
+    # Box (with normals facing out)
+    AttributeBegin
+      Surface "constant"
+      Translate 0.3 0.01 0
+      Rotate -30  0 1 0
+      Color [0 1 1]
+      Polygon "P" [ 0 0 0  0 0 1  0 1 1  0 1 0 ]   # left side
+      Polygon "P" [ 1 1 0  1 1 1  1 0 1  1 0 0 ]   # right side
+      Color [1 1 0]
+      Polygon "P" [ 0 1 0  1 1 0  1 0 0  0 0 0 ]   # front side
+      Polygon "P" [ 0 0 1  1 0 1  1 1 1  0 1 1 ]   # back side
+      Color [0 1 0]
+      Polygon "P" [ 0 1 1  1 1 1  1 1 0  0 1 0 ]   # top
+    AttributeEnd
+  WorldEnd
+FrameEnd

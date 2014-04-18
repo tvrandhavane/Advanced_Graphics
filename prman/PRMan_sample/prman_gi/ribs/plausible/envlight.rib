@@ -1,0 +1,72 @@
+Option "searchpath" "string shader" "../shaders/:../shaders/plausible/"
+Option "searchpath" "string texture" "../textures/"
+
+FrameBegin 1
+  Exposure 2.2 1
+  Format 960 540 1  PixelSamples 4 4
+  ShadingRate 1
+  ShadingInterpolation "smooth"
+  Display "envillum" "framebuffer" "rgba" "int merge" [0]
+  Projection "perspective" "fov" 22
+  # Setup the camera
+  Translate 0 -0.5 8
+  Rotate -45  1 0 0 
+  Rotate -20  0 1 0
+
+  WorldBegin
+    # Define coordinate system "swapyz" for envmap
+    AttributeBegin
+      Transform [ 1 0 0 0  0 0 1 0  0 1 0 0  0 0 0 1 ]
+      Rotate 90 0 0 1
+      # Modify this rotation to move envlight 
+      Rotate 90 1 0 0
+      CoordinateSystem "swapyz"
+    AttributeEnd
+
+    LightSource "plausibleEnvlight" 1 "string mapname" "rgblatlong.env" 
+                "string coordSys" "swapyz" "color lightcolor" [10 10 10] 
+                "float nsamples" 64
+    Illuminate 1 1
+
+    Attribute "visibility" "int trace" 1   # make objects visible to rays
+    Attribute "visibility" "int transmission" 1   # make objects visible to rays
+
+    # Ground plane
+    AttributeBegin
+      Color  [.6 .5 .6]
+      Surface "plausibleMatte" 
+      Scale 3 3 3
+      Polygon "P" [ -1 0 1  1 0 1  1 0 -1  -1 0 -1 ]
+    AttributeEnd
+
+    # Sphere
+    AttributeBegin
+      Color  [.6 .5 .6]
+      Surface "plausibleMatte"
+      Translate -0.7 0.5 0
+      Sphere 0.5  -0.5 0.5  360
+    AttributeEnd
+
+    # A Teapot
+    AttributeBegin
+      Color  [.6 .5 .6]
+      Surface "plausibleDielectric"
+      Sides 2
+      Scale .35 .35 .35
+      Rotate 90 0 0 1 
+      Rotate 90 0 1 0 
+      Translate -1.9 -2.1 .01
+      Rotate -30  0 0 1
+
+      Geometry "teapot"
+    AttributeEnd
+
+    # Sphere - simple reflective sphere for envmap orientation reference
+    AttributeBegin
+      Surface "plausibleDielectric"
+      Translate .3 0.3 -.5
+      Sphere 0.3  -0.3 0.3  360
+    AttributeEnd
+
+  WorldEnd
+FrameEnd

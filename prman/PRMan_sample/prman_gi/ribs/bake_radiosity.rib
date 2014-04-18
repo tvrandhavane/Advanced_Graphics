@@ -1,0 +1,63 @@
+Option "searchpath" "string shader" "../shaders/"
+Option "searchpath" "string texture" "../textures/"
+
+
+FrameBegin 1
+  Format 512 512 1
+  ShadingInterpolation "smooth"
+  PixelSamples 4 4
+  Display "cornell_a.tif" "framebuffer" "rgba"
+  Projection "perspective" "fov" 30
+  Translate 0 0 5
+
+  DisplayChannel "float _area"
+  DisplayChannel "color _radiosity"
+  DisplayChannel "color Cs"
+
+  WorldBegin
+
+    Attribute "cull" "hidden" 0   # to ensure occl. is comp. behind objects
+    Attribute "cull" "backfacing" 0 # to ensure occl. is comp. on backsides
+    Attribute "dice" "rasterorient" 0   # view-independent dicing
+
+    Attribute "visibility" "int diffuse" 1   # make objects visible to rays
+    Attribute "visibility" "int specular" 1   # make objects visible to rays
+    Attribute "visibility" "int transmission" 1   # make objects visible to rays
+    Attribute "trace" "bias" 0.005
+
+    TransformBegin
+      LightSource "cosinelight_rts" 1 "point from" [0 0.999 0] "float intensity" 4 "float falloff" 2
+    TransformEnd
+
+    Surface "bake_radiosity" "string bakefile" "cornell_radio.ptc"
+      "string displaychannels" "_area,_radiosity,Cs" "float Kd" 0.8
+
+    # Matte box
+    AttributeBegin
+      Color [1 0 0]
+      Polygon "P" [ -1 1 -1  -1 1 1  -1 -1 1  -1 -1 -1 ]   # left wall
+      Color [0 0 1]
+      Polygon "P" [ 1 -1 -1  1 -1 1  1 1 1  1 1 -1 ]   # right wall
+      Color [1 1 1]
+      Polygon "P" [ -1 1 1  1 1 1  1 -1 1  -1 -1 1 ]   # back wall
+      Polygon "P" [ -1 1 -1  1 1 -1  1 1 1  -1 1 1 ]   # ceiling
+      Polygon "P" [ -1 -1 1  1 -1 1  1 -1 -1  -1 -1 -1 ]   # floor
+    AttributeEnd
+
+    # Attribute "shade" "string transmissionhitmode" "opaque" # the spheres cast shadows
+
+    # Left sphere (chrome; set to black in this pass)
+    AttributeBegin
+      Color [1 1 0]
+      Translate -0.3 -0.69 0.3
+      Sphere 0.3  -0.3 0.3  360
+    AttributeEnd
+
+    # Right sphere (matte)
+    AttributeBegin
+      Color [0 1 0]
+      Translate 0.3 -0.69 -0.3
+      Sphere 0.3  -0.3 0.3  360
+    AttributeEnd
+  WorldEnd
+FrameEnd

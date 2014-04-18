@@ -1,0 +1,53 @@
+Option "searchpath" "string shader" "../shaders/"
+
+FrameBegin 1
+  Format 960 540 1
+  PixelSamples 4 4
+  ShadingInterpolation "smooth"
+  Display "occlusionsurf" "framebuffer" "rgba"   # render beauty
+  Declare "aov_occ" "varying color"
+  Display "+aov_occ" "framebuffer" "aov_occ" "quantize" [0 255 0 255] # render AOV
+  Projection "perspective" "fov" 22
+  Translate 0 -0.5 8
+  Rotate -40  1 0 0
+  Rotate -20  0 1 0
+
+  WorldBegin
+
+    Attribute "visibility" "int diffuse" 1   # make objects visible to rays
+    Attribute "visibility" "int specular" 1   # make objects visible to rays
+    Attribute "visibility" "int transmission" 1   # make objects visible to rays
+    Attribute "trace" "bias" 0.005
+
+    # Ground plane
+    AttributeBegin
+      Surface "occsurf2" "float samples" 128 "float maxvariation" 0.01
+      Color [1 1 1]
+      Scale 3 3 3
+      Polygon "P" [ -1 0 1  1 0 1  1 0 -1  -1 0 -1 ]
+    AttributeEnd
+
+    # Sphere
+    AttributeBegin
+      Surface "occsurf2" "float samples" 128 "float maxvariation" 0.01
+      Color 1 0 0
+      Translate -0.7 0.5 0
+      Sphere 0.5  -0.5 0.5  360
+    AttributeEnd
+
+    # Box (with normals facing out)
+    AttributeBegin
+      Surface "occsurf2" "float samples" 128 "float maxvariation" 0.01
+      Translate 0.3 0.01 0
+      Rotate -30  0 1 0
+      Color [0 1 1]
+      Polygon "P" [ 0 0 0  0 0 1  0 1 1  0 1 0 ]   # left side
+      Polygon "P" [ 1 1 0  1 1 1  1 0 1  1 0 0 ]   # right side
+      Color [1 1 0]
+      Polygon "P" [ 0 1 0  1 1 0  1 0 0  0 0 0 ]   # front side
+      Polygon "P" [ 0 0 1  1 0 1  1 1 1  0 1 1 ]   # back side
+      Color [0 1 0]
+      Polygon "P" [ 0 1 1  1 1 1  1 1 0  0 1 0 ]   # top
+    AttributeEnd
+  WorldEnd
+FrameEnd
