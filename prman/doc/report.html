@@ -1,12 +1,12 @@
 <html>
 	<head>
 		<title>
-			Assignment 1, Part 2: Rendering using Renderman
+			Rendering using Renderman
 		</title>
 	</head>
-	<body>
+	<body style="margin-left:5%;margin-right:5%;">
 		<h1 align="center">
-			Assignment 1, Part 2<br/> Rendering using Renderman
+			Rendering using Renderman
 		</h1>
 		<hr/>
 
@@ -17,23 +17,94 @@
 			110050043<br/>
 		</p>
 		<hr/>
-
+		<h2>Problem Statement :</h2>
+			<p>Translate the scene made for Ray Tracer assignment to PRMan and add indirect illumination, caustics, area lights, shadows and texture to the scene. Render the scene using PRMan's ray tracing and point based methods.</p>
+		<hr>
 		<p>
 			<h2>
 				Rendering using Ray Tracing
 			</h2>
 
-			In part 1 of this assignment, we created a ray tracing based renderer in C++ and created following scene.
+			In Ray Tracer assignment, we created a ray tracing based renderer in C++ and created following scene.
 			<p>
 				<img src="Images/original_scene.jpg"></img>
 			</p>
-
-			In part 2 of this assignment, we took the scene file for this scene and converted it to a RIB file and generated the following image in Renderman.
+			<h3>Translated Scene</h3>
+			In this assignment, we took the scene file for this scene and converted it to a RIB file and generated the following image in Renderman.
 
 			<p>
 				<img src="Images/translated_scene.jpg"></img>
 			</p>
+
+			<h3>Indirect Illumination</h3>
+			After adding indirect illumination to the scene, we got the following result.
+
+			<p>
+				<img src="Images/with_indirect_illumination.jpg"></img>
+			</p>
+
+			<h3>Caustics</h3>
+			After adding caustics to the scene, we got the following result.
+
+			<p>
+				<img src="Images/with_caustics.jpg"></img>
+			</p>
+
+			<h3>Texture</h3>
+			After adding texture to the back wall and to the front sphere, we got the following result.
+
+			<p>
+				<img src="Images/with_texture.jpg"></img>
+			</p>
+
+			<h3>Area Light</h3>
+			After adding an area light to the ceiling, we got the following result.
+
+			<p>
+				<img src="Images/with_area_light.jpg"></img>
+			</p>
 		</p>
+		<hr>
+		<p>
+			<h2>
+				Rendering using Point Based methods
+			</h2>
+
+			<h3>Indirect Illumination</h3>
+			With indirect illumination in point based method, we got the following result.
+
+			<p>
+				<img src="Images/pointbased_bleeding.jpg"></img>
+			</p>
+
+			<h3>Caustics</h3>
+			After adding caustics to the scene, we got the following result.
+
+			<p>
+				<img src="Images/pointbased_caustics.jpg"></img>
+			</p>
+
+			<h3>Area Light</h3>
+			After adding an area light to the ceiling, we got the following result.
+
+			<p>
+				<img src="Images/pointbased_area_light.jpg"></img>
+			</p>
+
+			<h3>Soft Shadows</h3>
+			After adding occlusion to get soft shadows, we got the following result.
+
+			<p>
+				<img src="Images/pointbased_soft_shadows.jpg"></img>
+			</p>
+
+			<h3>Texture</h3>
+			After adding texture to the back wall and to the front sphere, we got the following result.
+
+			<p>
+				<img src="Images/pointbased_texture.jpg"></img>
+			</p>
+
 	</body>
 
 </html>

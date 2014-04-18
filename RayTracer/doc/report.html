@@ -1,0 +1,123 @@
+<html>
+<head>
+	<title>Ray Tracer</title>
+	<style>
+	table,th,td
+	{
+		border:1px solid black;
+		border-collapse:collapse;
+	}
+	</style>
+</head>
+<body style="margin-left:5%;margin-right:5%;">
+	<h1 style="text-align:center;">Ray Tracer</h1>
+	<hr/>
+
+	<p align="center">
+		Tanmay Randhavane<br/>
+		110050010<br/><br/>
+		Alok Yadav <br/>
+		110050043<br/>
+	</p>
+	<hr>
+	<h2>Problem Statement :</h2>
+	<p>Implement a simple ray recursive tracer along with affine transformations of objects, the Phong Illumination Model with point lights, shadows and uniform super-sampling for anti-aliasing.</p>
+	<hr>
+	<h2>Implementation</h2>
+	<h3>We have implemented following classes:</h3>
+	<p>
+		<b>color : </b>It is used to define the color of an object.
+	</p>
+	<p>
+		<b>point : </b> Class to represent a point in space.
+	</p>
+	<p>
+		<b>ray : </b> Class to represent a ray in space.
+	</p>
+	<p>
+		<b>function : </b> Class containing basic functions like dot product, cross product, vector matrix multiplication.
+	</p>
+	<p>
+		<b>rayIntersection: </b>
+		This class contains methods to calculate refracted and reflected rays. 
+		<br/>getReflectedRay() method takes 
+		a point , an incident ray  and the normal at that point and gives the reflected rays at that point.
+		<br />getRefractedRay() method take a point, an incident ray, the normal and refractive indices of the two surfaces and gives refracted ray.
+	</p>
+	<p>
+		<b>Sphere : </b> Class to represent sphere objects. It contains methods to give the intersection point of any ray with the sphere. Also, it contains a method to compute normal at any point on the sphere.
+		</p>
+	<p>
+		<b>Triangle : </b> Class to represent triangle objects. It contains methods to give the intersection point of any ray with the triangle. Also, it contains a method to compute normal at any point on the triangle.
+	</p>
+	<p>
+		<b>raytracer : </b>
+		This class contains main implementation methods for raytracing.
+
+	</p>
+	<hr>
+	<h2>Results</h2>
+		<h3>Scene</h3>
+		The scene without anti aliasing is obtained as follows:
+
+		<p>
+			<img src="Images/scene.jpg"></img>
+		</p>
+		<h3>With anti-aliasing</h3>
+		The scene with anti aliasing is obtained as follows:
+
+		<p>
+			<img src="Images/with_anti_aliasing.jpg"></img>
+		</p>
+	<hr>
+	<h2>How to Run</h2>
+	<p> <b>Description of the scene file </b> <br/>
+		<p><table border="1">
+			<tr>
+				<th>Object</th>
+				<th>Specification Format</th>
+			</tr>
+			<tr>
+				<td>Eye Position</td>
+				<td>E, x, y, z</td>
+			</tr>
+			<tr>
+				<td>Up vector</td>
+				<td>VUP, x, y, z</td>
+			</tr>
+			<tr>
+				<td>Normal to viewing plane</td>
+				<td>N, x, y, z</td>
+			</tr>
+			<tr>
+				<td>Window center</td>
+				<td>R, x, y, z</td>
+			</tr>
+			<tr>
+				<td>Window</td>
+				<td>W, right,left, top,bottom</td>
+			</tr>
+			<tr>
+				<td>Light </td>
+				<td>L, x,y,z,Red light Intesity. Green light Intesity,Blue light Intesity</td>
+			</tr>
+			<tr>
+				<td>Sphere </td>
+				<td>S, radius, center_x1,center_y1,center_z1, r,g,b, specular/diffuse, kd,ks,kt,kr </td>
+			</tr>
+			<tr>
+				<td>Triangle </td>
+				<td>T, x1,y1,z1, x2,y2,z2, x3,y3,z3, r,g,b, specular/diffuse, kd,ks,kt,kr </td>
+			</tr>
+		</table>
+		</p>
+	</p>
+	<p> <b>Commands </b> <br/>
+		<ol>
+			<li>make</li>
+			<li>./bin/raytracer</li>
+		</ol>
+	</p>
+
+</body>
+</html>

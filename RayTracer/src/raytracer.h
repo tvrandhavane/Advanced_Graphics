@@ -53,10 +53,6 @@ class raytracer{
 		bool isBlocked(ray &r,  Point &p);
 		void antiAliasing (int & temp_i , int & temp_j, int level ,color & pixelColo);
 		void rayTraceCallAntiAliasing(int level);
-
-
-
-
 };
 
 

@@ -10,7 +10,6 @@ surface specularSurface
 	float roughness = 1/21 ;
 )
 {
-	
 	normal Nf = faceforward (N, I);
 	vector V = -normalize (I);
 	uniform float curDepth = 0;
